@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 
 var mongo = require('mongodb');
 var monk = require('monk');
+var db = monk('mongodb://d3vuser:caltinea@ds047504.mongolab.com:47504/guzzlr');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -25,10 +26,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// app.use(function(req, res, next) {
-//   req.db = db;
-//   next();
-// });
+app.use(function(req, res, next) {
+  req.db = db;
+  next();
+});
 
 app.use('/', routes);
 app.use('/users', users);
