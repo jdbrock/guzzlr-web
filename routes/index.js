@@ -18,7 +18,7 @@ router.get('/', function(req, res, next)
   var db = req.db;
   var collection = db.get('products');
   
-  collection.find({}, function(e, docs)
+  collection.find({}, {sort: {LastSeen: -1}}, function(e, docs)
   {
     res.render('products',
     {
