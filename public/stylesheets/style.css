@@ -1,5 +1,46 @@
-.logo
+.site-logo
 {
   font-family: 'Lobster', cursive;
-  color: #d35400;
+  font-size: 18pt;
+  /*color: #d35400;*/
+  margin: 0;
 }
+
+/*.site-main-nav
+{
+  margin: 5px;
+  margin-bottom: 15px;
+}*/
+
+.site-page-header
+{
+  font-family: "Open Sans";
+  font-weight: 200;
+  font-size: 24pt;
+  color: #bbb;
+  text-decoration: none;
+  /*margin-top: 25px;*/
+  /*text-align: center;*/
+}
+
+.site-jumbotron
+{
+  margin-top: 0;
+  margin-bottom: 0;
+  -webkit-font-smoothing: antialiased;
+  text-shadow: 0 1px 8px rgba(0,0,0,0.6);
+  
+  background: url(/images/whales.jpg) no-repeat center -20px fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  color: white;
+  font-weight: bold;
+  font-family: 'Lato', sans-serif;
+}
+
+/*.site-padding-top
+{
+  height: 50px;
+}*/

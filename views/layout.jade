@@ -6,8 +6,26 @@ html
     link(href='/css/bootstrap.css', rel='stylesheet')
     link(href='/css/bootstrap-theme.css', rel='stylesheet')
     link(href='https://fonts.googleapis.com/css?family=Lobster', rel='stylesheet', type='text/css')
+    link(href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600', rel='stylesheet', type='text/css')
+    link(href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600', rel='stylesheet', type='text/css')
+    link(href='https://fonts.googleapis.com/css?family=Lato:400,700', rel='stylesheet', type='text/css')
     link(rel='stylesheet', href='/stylesheets/style.css')
     script(src='//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js')
     meta(name='viewport', content='width=device-width, initial-scale=1')
-  body
-    block content
+body
+  nav(class='navbar navbar-default')
+    div(class='container-fluid')
+      div(class='navbar-header')
+        a(class='navbar-brand', href='/')
+          span(class='site-logo') Guzzlr
+      ul(class='nav navbar-nav')
+        li
+          a(href='/today') Today
+        li
+          a(href='/everything') Everything
+        li
+          a(href='/notify') Notify Me
+      ul(class='nav navbar-nav' style='float: right')
+        li
+          a(href='//taphub.brock.in/') Tap Hub
+  block content

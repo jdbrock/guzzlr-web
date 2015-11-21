@@ -1,0 +1,25 @@
+div(class='container')
+	table(class='table table-striped')
+		thead
+			tr
+				th.
+					Beer
+				th.
+					Shop
+				// th.
+				// 	Seen
+		tbody
+			each product, i in products
+				tr
+					td
+						a(href="#{product.Uri}") #{product.Name}
+					td
+						case product.ProviderKey
+							when "BIAB"
+								span(class="label", style="background-color: #27ae60") Belgium in a Box
+							when "BeerMerchants"
+								span(class="label", style="background-color: #d35400") Beer Merchants
+							when "EtreGourmet"
+								span(class="label", style="background-color: #8e44ad") Etre Gourmet
+							default
+								|#{product.ProviderKey}
