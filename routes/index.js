@@ -19,7 +19,7 @@ router.get('/everything', function(req, res, next)
   
   collection.find({}, {sort: {LastSeen: -1}}, function(e, docs)
   {
-    res.render('all-products',
+    res.render('everything',
     {
       "products": docs
     });
@@ -38,7 +38,7 @@ router.get('/today', function(req, res, next)
   
   var now = moment().startOf('day');
   
-  collection.find({}, {sort: {LastSeen: -1}}, function(e, docs)
+  collection.find({}, {}, function(e, docs)
   {
     docs = _.filter(docs, function(value) {
       return moment(value.EventDate).startOf('day').isSame(now);
@@ -47,8 +47,10 @@ router.get('/today', function(req, res, next)
     docs = _.map(docs, function(value) {
       return value.Product; 
     });
+    
+    docs = _.sortBy(docs, "LastSeen").reverse();
         
-    res.render('new-products',
+    res.render('today',
     {
       "products": docs
     });

@@ -7,7 +7,6 @@ var bodyParser = require('body-parser');
 
 var mongo = require('mongodb');
 var monk = require('monk');
-var moment = require('moment');
 var underscore = require('underscore');
 var db = monk('mongodb://d3vuser:caltinea@ds047504.mongolab.com:47504/guzzlr');
 
@@ -15,6 +14,7 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
+app.locals.moment = require('moment');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
