@@ -11,21 +11,31 @@ html
     link(href='https://fonts.googleapis.com/css?family=Lato:400,700', rel='stylesheet', type='text/css')
     link(rel='stylesheet', href='/stylesheets/style.css')
     script(src='//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js')
+    script(src="https://cdn.auth0.com/js/lock-7.5.js")
+    script(src="/js/site.js")
     meta(name='viewport', content='width=device-width, initial-scale=1')
 body
-  nav(class='navbar navbar-default')
-    div(class='container-fluid')
-      div(class='navbar-header')
-        a(class='navbar-brand', href='/')
-          span(class='site-logo') Guzzlr
-      ul(class='nav navbar-nav')
+  nav.navbar.navbar-default
+    div.container-fluid
+      div.navbar-header
+        a.navbar-brand(href='/')
+          span.site-logo Guzzlr
+      ul.nav.navbar-nav
         li
           a(href='/today') Today
         li
           a(href='/everything') Everything
         li
           a(href='/notify') Notify Me
-      ul(class='nav navbar-nav' style='float: right')
-        li
-          a(href='//taphub.brock.in/') Tap Hub
+      ul.nav.navbar-nav(style='float: right')
+        if user
+          li
+            a(href='/profile') #{user.nickname}
+          li
+            a(href='/logout') Logout
+        else
+          li
+            a(href='/login') Login 
+        // li
+        //   a(href='//taphub.brock.in/') Tap Hub
   block content

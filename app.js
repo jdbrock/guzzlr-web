@@ -4,6 +4,24 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var _ = require('underscore');
+
+require('dotenv').load();
+require('dotenv-safe').load();
+
+//////////////// PASSPORT TEST
+
+var passport = require('passport');
+
+// This is the file we created in step 2.
+// This will configure Passport to use Auth0
+var strategy = require('./setup-passport');
+
+// Session and cookies middlewares to keep user logged in
+// var cookieParser = require('cookie-parser');
+var session = require('express-session');
+
+////////////////
 
 var mongo = require('mongodb');
 var monk = require('monk');
@@ -14,6 +32,41 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
+
+// passport test
+app.use(cookieParser());
+app.use(session({
+  secret: 'shhhhhhhhh',
+  resave: true,
+  saveUninitialized: true
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Auth0 callback handler
+app.get('/callback',
+  passport.authenticate('auth0', { failureRedirect: '/login' }),
+  function(req, res) {
+    if (!req.user) {
+      throw new Error('user null');
+    }
+    
+    if (_.isEmpty(req.query.go))
+      res.redirect("/");
+    else
+      res.redirect(req.query.go);
+  });
+  
+var requiresLogin = require('./requires-login');
+
+// app.get('/user',
+//   requiresLogin,
+//   function (req, res) {
+//     res.render('user', {
+//       user: req.user
+//     });
+//   });
+
 app.locals.moment = require('moment');
 
 // view engine setup

@@ -1,5 +1,5 @@
-div(class='container')
-	table(class='table table-striped')
+div.container
+	table.table.table-striped
 		thead
 			tr
 				th Beer
@@ -10,14 +10,14 @@ div(class='container')
 				tr
 					td
 						a(href="#{product.Uri}") #{product.Name}
-					td(class='site-product-cell-shop')
+					td.site-product-cell-shop
 						case product.ProviderKey
 							when "BIAB"
-								span(class="label", style="background-color: #27ae60") Belgium in a Box
+								span.label(style="background-color: #27ae60") Belgium in a Box
 							when "BeerMerchants"
-								span(class="label", style="background-color: #d35400") Beer Merchants
+								span.label(style="background-color: #d35400") Beer Merchants
 							when "EtreGourmet"
-								span(class="label", style="background-color: #8e44ad") Etre Gourmet
+								span.label(style="background-color: #8e44ad") Etre Gourmet
 							default
 								|#{product.ProviderKey}
 					td

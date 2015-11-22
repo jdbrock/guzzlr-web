@@ -1,7 +1,24 @@
 extends layout
 
 block content
-	div(class='container')
-		div(class='jumbotron site-jumbotron')
+	div.container
+		div.jumbotron.site-jumbotron
 			h1 Guzzlr
 			h2 Scanning the craft seas for mega-whales
+	// div.container
+	// 	if user
+	// 		p #{user.nickname}
+	// 	else
+	// 		button.btn.btn-info(onclick="signin()") Login
+	// script.
+	// 	var lock = new Auth0Lock('#{env.AUTH0_CLIENT_ID}', '#{env.AUTH0_DOMAIN}');
+	// 	function signin() {
+	// 		lock.show({
+	// 			callbackURL: '#{env.AUTH0_CALLBACK_URL}'
+	// 			, responseType: 'code'
+	// 			, authParams: {
+	// 			scope: 'openid name email picture'
+	// 			}
+	// 		});
+	// 	}
+	// 	
