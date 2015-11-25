@@ -7,7 +7,7 @@ var bodyParser = require('body-parser');
 var _ = require('underscore');
 
 require('dotenv').load();
-require('dotenv-safe').load();
+// require('dotenv-safe').load();
 
 //////////////// PASSPORT TEST
 
