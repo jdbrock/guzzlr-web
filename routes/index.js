@@ -32,6 +32,12 @@ router.get('/notify', function(req, res, next)
   res.render('notify', { env: env, user: req.user });
 });
 
+// GET /local
+router.get('/local', function(req, res, next)
+{
+  res.render('local', { env: env, user: req.user });
+});
+
 /* GET /today */
 router.get('/today', function(req, res, next)
 {
@@ -53,6 +59,30 @@ router.get('/today', function(req, res, next)
     docs = _.sortBy(docs, "LastSeen").reverse();
         
     res.render('today', { "products": docs, "env": env, user: req.user });
+  });
+});
+
+/* GET /yesterday */
+router.get('/yesterday', function(req, res, next)
+{
+  var db = req.db;
+  var collection = db.get('products-events');
+  
+  var now = moment().startOf('day').subtract(1, 'days');
+  
+  collection.find({}, {}, function(e, docs)
+  {
+    docs = _.filter(docs, function(value) {
+      return moment(value.EventDate).startOf('day').isSame(now);
+    });
+    
+    docs = _.map(docs, function(value) {
+      return value.Product; 
+    });
+    
+    docs = _.sortBy(docs, "LastSeen").reverse();
+        
+    res.render('yesterday', { "products": docs, "env": env, user: req.user });
   });
 });
 

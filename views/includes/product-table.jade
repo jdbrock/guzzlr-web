@@ -4,7 +4,8 @@ div.container
 			tr
 				th Beer
 				th Shop
-				th Last Seen
+				if !hideSeen
+					th Last Seen
 		tbody
 			each product, i in products
 				tr
@@ -18,7 +19,15 @@ div.container
 								span.label(style="background-color: #d35400") Beer Merchants
 							when "EtreGourmet"
 								span.label(style="background-color: #8e44ad") Etre Gourmet
+							when "Mikkeller"
+								span.label(style="background-color: #2e8ece") Mikkeller
+							when "Boxbeers"
+								span.label(style="background-color: #c0392b") Boxbeers
+							when "Brewdog"
+								span.label(style="background-color: #2c3e50") Brewdog
 							default
-								|#{product.ProviderKey}
-					td
-						|#{moment(product.LastSeen).fromNow()}
+								span.label
+									|#{product.ProviderKey}
+					if !hideSeen
+						td
+							|#{moment(product.LastSeen).fromNow()}

@@ -51,6 +51,9 @@ app.get('/callback',
       throw new Error('user null');
     }
     
+    var users = db.get('users');
+    users.insert(req.user);
+    
     if (_.isEmpty(req.query.go))
       res.redirect("/");
     else

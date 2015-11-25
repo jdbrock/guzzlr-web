@@ -11,6 +11,7 @@ html
     link(href='https://fonts.googleapis.com/css?family=Lato:400,700', rel='stylesheet', type='text/css')
     link(rel='stylesheet', href='/stylesheets/style.css')
     script(src='//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js')
+    script(src='/js/bootstrap.min.js')
     script(src="https://cdn.auth0.com/js/lock-7.5.js")
     script(src="/js/site.js")
     meta(name='viewport', content='width=device-width, initial-scale=1')
@@ -24,9 +25,13 @@ body
         li
           a(href='/today') Today
         li
+          a(href='/yesterday') Yesterday
+        li
           a(href='/everything') Everything
         li
           a(href='/notify') Notify Me
+        li
+          a(href='/local') Local
       ul.nav.navbar-nav(style='float: right')
         if user
           li
