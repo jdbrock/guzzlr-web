@@ -9,11 +9,6 @@ var env = {
   AUTH0_CALLBACK_URL: process.env.AUTH0_CALLBACK_URL
 }
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { env: env, user: req.user });
-});
-
 /* GET /everything */
 router.get('/everything', function(req, res, next)
 {
@@ -38,21 +33,23 @@ router.get('/local', function(req, res, next)
   res.render('local', { env: env, user: req.user });
 });
 
-/* GET /today */
-router.get('/today', function(req, res, next)
+var today = function(req, res, next)
 {
   var db = req.db;
   var collection = db.get('products-events');
   var now = moment().startOf('day');
-  var past = !_.isEmpty(req.query.date);
+  var date = now;
+  var dateSpecified = !_.isEmpty(req.query.date);
   
-  if (past)
-    now = moment(req.query.date).startOf('day');
+  if (dateSpecified)
+    date = moment(req.query.date).startOf('day');
+  
+  var past = !date.isSame(now);
   
   collection.find({}, {}, function(e, docs)
   {
     docs = _.filter(docs, function(value) {
-      return moment(value.EventDate).startOf('day').isSame(now);
+      return moment(value.EventDate).startOf('day').isSame(date);
     });
     
     docs = _.map(docs, function(value) {
@@ -61,9 +58,18 @@ router.get('/today', function(req, res, next)
     
     docs = _.sortBy(docs, "LastSeen").reverse();
         
-    res.render('today', { "products": docs, "env": env, user: req.user, past: past, pastDate: now });
+    res.render('today', { "products": docs, "env": env, user: req.user, past: past, date: date });
   });
-});
+};
+
+/* GET / */
+router.get('/', today);
+// router.get('/', function(req, res, next) {
+//   res.render('index', { env: env, user: req.user });
+// });
+
+/* GET /today */
+router.get('/today', today);
 
 /* GET /yesterday */
 router.get('/yesterday', function(req, res, next)

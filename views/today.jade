@@ -9,7 +9,7 @@ block content
 				|New Beer
 		h4
 			if past
-				|#{pastDate.format('dddd Do MMMM')}
+				|#{date.format('dddd Do MMMM')}
 			else
 				|All of today's epic beached unicorns.
 	
@@ -25,6 +25,12 @@ block content
 		include ./includes/product-table.jade
 		
 	.container
-		a.btn.btn-default(href="/today?date=#{pastDate.subtract(1, 'days').format('YYYY-MM-D')}") &laquo; Previous Day
+		- var prevDay = moment(date).subtract(1, 'days').format('YYYY-MM-D');
+		- var nextDay = moment(date).add(1, 'days').format('YYYY-MM-D');
+		a.btn.btn-default(href="/today?date=#{prevDay}")
+			|&laquo; Previous Day
+		if past
+			a.btn.btn-default.pull-right(href="/today?date=#{nextDay}")
+				|Next Day &raquo;
 	.container
 		&nbsp;
