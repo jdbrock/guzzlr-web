@@ -43,8 +43,11 @@ router.get('/today', function(req, res, next)
 {
   var db = req.db;
   var collection = db.get('products-events');
-  
   var now = moment().startOf('day');
+  var past = !_.isEmpty(req.query.date);
+  
+  if (past)
+    now = moment(req.query.date).startOf('day');
   
   collection.find({}, {}, function(e, docs)
   {
@@ -58,7 +61,7 @@ router.get('/today', function(req, res, next)
     
     docs = _.sortBy(docs, "LastSeen").reverse();
         
-    res.render('today', { "products": docs, "env": env, user: req.user });
+    res.render('today', { "products": docs, "env": env, user: req.user, past: past, pastDate: now });
   });
 });
 

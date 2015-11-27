@@ -2,7 +2,29 @@ extends layout
 
 block content
 	div(class='container site-page-header')
-		h2(style='margin-top: 0px') New Beer
-		h4 All of today's epic beached unicorns.
-	- var hideSeen = true
-	include ./includes/product-table.jade
+		h2(style='margin-top: 0px')
+			if past
+				|Past Beer
+			else
+				|New Beer
+		h4
+			if past
+				|#{pastDate.format('dddd Do MMMM')}
+			else
+				|All of today's epic beached unicorns.
+	
+	if products.length == 0
+		.container
+			.alert.alert-info
+				if past
+					|Uh oh. Looks like there weren't any new beers.
+				else
+					|Looks like there aren't any new beers yet. There's still time!
+	else
+		- var hideSeen = true
+		include ./includes/product-table.jade
+		
+	.container
+		a.btn.btn-default(href="/today?date=#{pastDate.subtract(1, 'days').format('YYYY-MM-D')}") &laquo; Previous Day
+	.container
+		&nbsp;
