@@ -6,6 +6,8 @@ div.container
 				th Shop
 				if !hideSeen
 					th Last Seen
+				else
+					th Seen
 		tbody
 			each product, i in products
 				tr
@@ -28,6 +30,5 @@ div.container
 							default
 								span.label
 									|#{product.ProviderKey}
-					if !hideSeen
-						td
-							|#{moment(product.LastSeen).fromNow()}
+					td
+						|#{moment(product.LastSeen).fromNow()}
