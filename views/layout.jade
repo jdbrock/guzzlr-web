@@ -16,31 +16,35 @@ html
     script(src="/js/site.js")
     meta(name='viewport', content='width=device-width, initial-scale=1')
 body
-  nav.navbar.navbar-default
+  nav.navbar.navbar-default(role='navigation')
     div.container-fluid
       div.navbar-header
         a.navbar-brand(href='/')
           span.site-logo Guzzlr
-      ul.nav.navbar-nav
-        li
-          a(href='/today') Today
-        li
-          a(href='/yesterday') Yesterday
-        li
-          a(href='/everything') Everything
-        li
-          a(href='/notify') Notify Me
-        li
-          a(href='/local') Local
-      ul.nav.navbar-nav(style='float: right')
-        if user
+        button.navbar-toggle.site-menu-button(type='button', data-toggle='collapse', data-target='#navigationbar')
+          span.sr-only Toggle navigation
+          img.site-menu-icon(src='/images/menu.svg')
+      div.collapse.navbar-collapse#navigationbar
+        ul.nav.navbar-nav
           li
-            a(href='/profile') #{user.nickname}
+            a(href='/today') New Beer
+          // li
+          //   a(href='/yesterday') Yesterday
           li
-            a(href='/logout') Logout
-        else
+            a(href='/everything') Everything
           li
-            a(href='/login') Login 
-        // li
-        //   a(href='//taphub.brock.in/') Tap Hub
+            a(href='/notify') Notify Me
+          li
+            a(href='/local') Edinburgh
+        ul.nav.navbar-nav.site-navbar-right
+          if user
+            li
+              a(href='/profile') #{user.nickname}
+            li
+              a(href='/logout') Logout
+          else
+            li
+              a(href='/login') Login 
+          // li
+          //   a(href='//taphub.brock.in/') Tap Hub
   block content

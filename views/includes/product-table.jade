@@ -11,7 +11,7 @@ div.container
 		tbody
 			each product, i in products
 				tr
-					td
+					td.site-product-cell-name
 						a(href="#{product.Uri}") #{product.Name}
 					td.site-product-cell-shop
 						case product.ProviderKey
@@ -30,5 +30,5 @@ div.container
 							default
 								span.label
 									|#{product.ProviderKey}
-					td
+					td.site-product-cell-seen
 						|#{moment(product.LastSeen).fromNow()}
