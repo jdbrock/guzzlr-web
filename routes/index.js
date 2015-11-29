@@ -21,25 +21,39 @@ router.get('/everything', function(req, res, next)
       return !value.OutOfStock;
     });
     
-    res.render('everything', { "products": docs, "env": env, user: req.user });
+    res.render('everything', { "products": docs, "env": env, user: req.user, guzzlrUser: req.guzzlrUser });
   });
-});
-
-/* GET /notify */
-router.get('/notify', function(req, res, next)
-{
-  res.render('notify', { env: env, user: req.user });
 });
 
 // GET /local
 router.get('/local', function(req, res, next)
 {
-  res.render('local', { env: env, user: req.user });
+  res.render('local', { env: env, user: req.user, guzzlrUser: req.guzzlrUser });
 });
 
 router.post('/update-filters', function(req, res, next)
 {
+  // var guzzlrUser = req.guzzlrUser;
+  // guzzlrUser.Filter = req.body
   
+  var users = req.db.get('users');
+  users.findAndModify(
+  {
+    "query": {"_id": req.guzzlrUser._id },
+    "update": {"$set": {
+      "filter": req.body.filter
+    }}
+  },
+  function(err, doc) {
+    if (err) throw err;
+    console.log( doc );
+  });
+  
+  
+  // users.findOne({ _id: userIdHashed }, function(err, doc)
+  // {
+  //   req.guzzlrUser = doc;
+  // });
 });
 
 var today = function(req, res, next)
@@ -67,7 +81,7 @@ var today = function(req, res, next)
     
     docs = _.sortBy(docs, "LastSeen").reverse();
         
-    res.render('today', { "products": docs, "env": env, user: req.user, past: past, date: date });
+    res.render('today', { "products": docs, "env": env, user: req.user, past: past, date: date, guzzlrUser: req.guzzlrUser });
   });
 };
 
@@ -80,28 +94,23 @@ router.get('/', today);
 /* GET /today */
 router.get('/today', today);
 
-// /* GET /yesterday */
-// router.get('/yesterday', function(req, res, next)
+/* GET /notify */
+router.get('/notify', function(req, res, next)
+{
+  var db = req.db;
+  var test = req.guzzlrUser;
+  res.render('notify', { env: env, user: req.user, guzzlrUser: req.guzzlrUser });
+});
+
+// router.get('/a', function(req, res, next)
 // {
 //   var db = req.db;
 //   var collection = db.get('products-events');
+//   var now = moment().startOf('day');
+//   var date = now;
+//   var dateSpecified = !_.isEmpty(req.query.date);
 //   
-//   var now = moment().startOf('day').subtract(1, 'days');
-//   
-//   collection.find({}, {}, function(e, docs)
-//   {
-//     docs = _.filter(docs, function(value) {
-//       return moment(value.EventDate).startOf('day').isSame(now);
-//     });
-//     
-//     docs = _.map(docs, function(value) {
-//       return value.Product; 
-//     });
-//     
-//     docs = _.sortBy(docs, "LastSeen").reverse();
-//         
-//     res.render('yesterday', { "products": docs, "env": env, user: req.user });
-//   });
+//   res.render('test', { env: env, user: req.user, guzzlrUser: req.guzzlrUser });
 // });
 
 router.get('/login',

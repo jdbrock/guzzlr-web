@@ -4,7 +4,9 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var pbkdf2 = require('pbkdf2-sha256');
 var _ = require('underscore');
+var myHash = require('./crypto.js');
 
 require('dotenv').load();
 // require('dotenv-safe').load();
@@ -51,14 +53,29 @@ app.get('/callback',
       throw new Error('user null');
     }
     
+    var userId = req.user.id;
+    var userIdHashed = myHash(userId);
     var users = db.get('users');
-    users.insert(req.user);
     
-    if (_.isEmpty(req.query.go))
-      res.redirect("/");
-    else
-      res.redirect(req.query.go);
+    users.findOne({ _id: userIdHashed }, function(err, doc) {
+      if (!doc)
+      {
+        var guzzlrUser = {
+          _id: userIdHashed,
+          authPlatform: req.user
+        };
+
+        users.insert(guzzlrUser);  
+      }
+
+      if (_.isEmpty(req.query.go))
+        res.redirect("/");
+      else
+        res.redirect(req.query.go);
+    });
   });
+  
+
   
 var requiresLogin = require('./requires-login');
 
@@ -87,6 +104,25 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(function(req, res, next) {
   req.db = db;
   next();
+});
+
+app.use(function(req, res, next) {
+  
+  var test = req.db;  
+  
+  if (req.user)
+  {
+    var userIdHashed = myHash(req.user.id);
+    var users = req.db.get('users');
+    
+    users.findOne({ _id: userIdHashed }, function(err, doc)
+    {
+      req.guzzlrUser = doc;
+      next();
+    });
+  }
+  else
+    next();
 });
 
 app.use('/', routes);

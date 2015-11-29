@@ -21,16 +21,23 @@ block content
 				div(class='panel panel-default')
 					div(class='panel-heading')
 						h4 Real-time
-					div(class='panel-body') 
-						p We'll let you define some keywords (e.g. 'Fou Foune') and poke you immediately when we find matching beers. You can have multiple terms separated by a comma, e.g. 'Fou Foune, Lou Pepe'.
-						p Providing you have signed up via Twitter, we'll send you a Twitter mention whenever any of your filters are met.
-						p Note that if you want to hear about everything, simply follow the @guzzlrbot Twitter feed.
+					div(class='panel-body')
+						p We'll tweet you immediately when one of your search terms matches any new beer.
+						p You can separate multiple search terms with a comma.
+						// p We'll let you define some keywords (e.g. 'Fou Foune') and poke you immediately when we find matching beers. You can have multiple terms separated by a comma, e.g. 'Fou Foune, Lou Pepe'.
+						// p Providing you have signed up via Twitter, we'll send you a Twitter mention whenever any of your filters are met.
+						// p Note that if you want to hear about everything, simply follow the @guzzlrbot Twitter feed.
 						if user
-							div.input-group
-								span.input-group-addon Search terms:
-								input.form-control(type='text')
-								span.input-group-btn
-									input.btn.btn-default(type='submit', value='Save', name='save')
+							form#filters-form
+								div.input-group
+									span.input-group-addon Search terms:
+									input.form-control#filters(type='text', name='filter', value='#{guzzlrUser.filter}')
+									input#userid(type='hidden', value='#{guzzlrUser._id}', name='userid')
+									// span.input-group-btn
+									// 	input.btn.btn-default(type='submit', value='Save', name='save')
+							// #filter-success-message(style='opacity: 0')
+							// 	.alert.alert-success
+							// 		| Hooray. Your filters have been saved.
 						else
 							button.btn.btn-default(onclick="signin()") Login
 			div(class='col-md-6')
@@ -40,36 +47,38 @@ block content
 					div(class='panel-body')
 						p We'll send you an email daily with any new beers.
 						p Coming soon...
-						if user
-							// Begin MailChimp Signup Form
-							// link(href='//cdn-images.mailchimp.com/embedcode/classic-081711.css', rel='stylesheet', type='text/css')
-							style(type='text/css').
-								#mce-error-response{margin-top: 10px}
-								#mce-success-response{margin-top: 10px}
-							// 	#mc_embed_signup{background:#fff; clear:left; font:14px Helvetica,Arial,sans-serif; }
-								/* Add your own MailChimp form style overrides in your site stylesheet or in this style block.
-								We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
-							#mc_embed_signup
-								form#mc-embedded-subscribe-form.validate(action='//brock.us12.list-manage.com/subscribe/post?u=509e3cce5aaa849b22ab16289&id=9e12f0fff6', method='post', name='mc-embedded-subscribe-form', target='_blank', novalidate='')
-									#mc_embed_signup_scroll
-										// .mc-field-group
-										div.input-group
-											span.input-group-addon Email address:
-											// label(for='mce-EMAIL') Email Address 
-											// input#mce-EMAIL.required.email(type='email', value='', name='EMAIL')
-											input.form-control(type='email', value='', name='EMAIL')
-											span.input-group-btn
-												input.btn.btn-default(type='submit', value='Subscribe', name='subscribe')
-										#mce-responses.clear
-											#mce-error-response.alert.alert-danger.response(style='display:none')
-											#mce-success-response.alert.alert-success.response(style='display:none')
-											// real people should not fill this in and expect good things - do not remove this or risk form bot signups
-										div(style='position: absolute; left: -5000px;', aria-hidden='true')
-											input(type='text', name='b_509e3cce5aaa849b22ab16289_9e12f0fff6', tabindex='-1', value='')
-										.clear
-							script(type='text/javascript', src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js')
-							script(type='text/javascript').
-								(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';}(jQuery));var $mcj = jQuery.noConflict(true);
-							// End mc_embed_signup
-						else
-							button.btn.btn-default(onclick="signin()") Login
+						// disabled
+						if false
+							if user
+								// Begin MailChimp Signup Form
+								// link(href='//cdn-images.mailchimp.com/embedcode/classic-081711.css', rel='stylesheet', type='text/css')
+								style(type='text/css').
+									#mce-error-response{margin-top: 10px}
+									#mce-success-response{margin-top: 10px}
+								// 	#mc_embed_signup{background:#fff; clear:left; font:14px Helvetica,Arial,sans-serif; }
+									/* Add your own MailChimp form style overrides in your site stylesheet or in this style block.
+									We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
+								#mc_embed_signup
+									form#mc-embedded-subscribe-form.validate(action='//brock.us12.list-manage.com/subscribe/post?u=509e3cce5aaa849b22ab16289&id=9e12f0fff6', method='post', name='mc-embedded-subscribe-form', target='_blank', novalidate='')
+										#mc_embed_signup_scroll
+											// .mc-field-group
+											div.input-group
+												span.input-group-addon Email address:
+												// label(for='mce-EMAIL') Email Address 
+												// input#mce-EMAIL.required.email(type='email', value='', name='EMAIL')
+												input.form-control(type='email', value='', name='EMAIL')
+												span.input-group-btn
+													input.btn.btn-default(type='submit', value='Subscribe', name='subscribe')
+											#mce-responses.clear
+												#mce-error-response.alert.alert-danger.response(style='display:none')
+												#mce-success-response.alert.alert-success.response(style='display:none')
+												// real people should not fill this in and expect good things - do not remove this or risk form bot signups
+											div(style='position: absolute; left: -5000px;', aria-hidden='true')
+												input(type='text', name='b_509e3cce5aaa849b22ab16289_9e12f0fff6', tabindex='-1', value='')
+											.clear
+								script(type='text/javascript', src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js')
+								script(type='text/javascript').
+									(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';}(jQuery));var $mcj = jQuery.noConflict(true);
+								// End mc_embed_signup
+							else
+								button.btn.btn-default(onclick="signin()") Login
