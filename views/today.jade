@@ -4,14 +4,14 @@ block content
 	div(class='container site-page-header')
 		h2(style='margin-top: 0px')
 			if past
-				|Past Beer
+				|Daily Beer
 			else
-				|New Beer
+				|Daily Beer
 		h4
 			if past
 				|#{date.format('dddd Do MMMM')}
 			else
-				|All of today's epic beached unicorns.
+				|Today
 	
 	if products.length == 0
 		.container
@@ -20,18 +20,30 @@ block content
 					|Uh oh. Looks like there weren't any new beers.
 				else
 					|Looks like there aren't any new beers yet. There's still time!
-	else
-		- var hideSeen = true
-		include ./includes/product-table.jade
-		
+
+	- var hideSeen = true
 	.container
+		if products.length > 0
+			include ./includes/product-table.jade
+
 		- var prevDay = moment(date).subtract(1, 'days').format('YYYY-MM-D');
 		- var nextDay = moment(date).add(1, 'days').format('YYYY-MM-D');
-		a.btn.btn-default(href="/today?date=#{prevDay}")
-			|&laquo; Previous Day
-		if past
-			a.btn.btn-default.pull-right(href="/today?date=#{nextDay}")
-				|Next Day &raquo;
+		// a.btn.btn-default(href="/today?date=#{prevDay}")
+		// 	|&laquo; Previous Day
+		// if past
+		// 	a.btn.btn-default.pull-right(href="/today?date=#{nextDay}")
+		// 		|Next Day &raquo;
+		nav
+			ul.pager
+				li.previous
+					a(href="/today?date=#{prevDay}")
+						span(aria-hidden='true') &larr; 
+						| Yesterday
+				if past
+					li.next
+						a(href="/today?date=#{nextDay}")
+							| Tomorrow
+							span(aria-hidden='true') &rarr;	
 	// .container
 	// 	b #{guzzlrUser._id}
 	.container

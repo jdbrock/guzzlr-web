@@ -25,9 +25,21 @@ h4
 {
   font-family: 'Lobster', cursive;
   font-size: 18pt;
-  /*color: #d35400;*/
+  color: #75CAEB;
   margin: 0;
 }
+
+/*ul.nav li a, ul.nav li a:visited {
+    color: #16a085 !important;
+}*/
+
+ul.nav li a:hover, ul.nav li a:active {
+    color: #75CAEB !important;
+}
+
+/*ul.nav li.active a {
+    color: #16a085 !important;
+}*/
 
 /*.site-main-nav
 {

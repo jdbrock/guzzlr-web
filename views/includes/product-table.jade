@@ -1,34 +1,33 @@
-div.container
-	table.table.table-striped
-		thead
+table.table.table-striped
+	thead
+		tr
+			th Beer
+			th Shop
+			if !hideSeen
+				th Last Seen
+			else
+				th Seen
+	tbody
+		each product, i in products
 			tr
-				th Beer
-				th Shop
-				if !hideSeen
-					th Last Seen
-				else
-					th Seen
-		tbody
-			each product, i in products
-				tr
-					td.site-product-cell-name
-						a(href="#{product.Uri}") #{product.Name}
-					td.site-product-cell-shop
-						case product.ProviderKey
-							when "BIAB"
-								span.label(style="background-color: #27ae60") Belgium in a Box
-							when "BeerMerchants"
-								span.label(style="background-color: #d35400") Beer Merchants
-							when "EtreGourmet"
-								span.label(style="background-color: #8e44ad") Etre Gourmet
-							when "Mikkeller"
-								span.label(style="background-color: #2e8ece") Mikkeller
-							when "Boxbeers"
-								span.label(style="background-color: #c0392b") Boxbeers
-							when "Brewdog"
-								span.label(style="background-color: #2c3e50") Brewdog
-							default
-								span.label
-									|#{product.ProviderKey}
-					td.site-product-cell-seen
-						|#{moment(product.LastSeen).fromNow()}
+				td.site-product-cell-name
+					a(href="#{product.Uri}") #{product.Name}
+				td.site-product-cell-shop
+					case product.ProviderKey
+						when "BIAB"
+							span.label(style="background-color: #27ae60") Belgium in a Box
+						when "BeerMerchants"
+							span.label(style="background-color: #d35400") Beer Merchants
+						when "EtreGourmet"
+							span.label(style="background-color: #8e44ad") Etre Gourmet
+						when "Mikkeller"
+							span.label(style="background-color: #2e8ece") Mikkeller
+						when "Boxbeers"
+							span.label(style="background-color: #c0392b") Boxbeers
+						when "Brewdog"
+							span.label(style="background-color: #2c3e50") Brewdog
+						default
+							span.label
+								|#{product.ProviderKey}
+				td.site-product-cell-seen
+					|#{moment(product.LastSeen).fromNow()}
