@@ -6,8 +6,20 @@ var router = express.Router();
 var env = {
   AUTH0_CLIENT_ID: process.env.AUTH0_CLIENT_ID,
   AUTH0_DOMAIN: process.env.AUTH0_DOMAIN,
-  AUTH0_CALLBACK_URL: process.env.AUTH0_CALLBACK_URL
+  AUTH0_CALLBACK_URL: process.env.AUTH0_CALLBACK_URL,
+  TWITTER_CONSUMER_KEY: process.env.TWITTER_CONSUMER_KEY,
+  TWITTER_CONSUMER_SECRET: process.env.TWITTER_CONSUMER_SECRET,
+  TWITTER_ACCESS_TOKEN_KEY: process.env.TWITTER_ACCESS_TOKEN_KEY,
+  TWITTER_ACCESS_TOKEN_SECRET: process.env.TWITTER_ACCESS_TOKEN_SECRET
 }
+
+var Twitter = require('twitter');
+var twitterClient = new Twitter({
+  consumer_key: env.TWITTER_CONSUMER_KEY,
+  consumer_secret: env.TWITTER_CONSUMER_SECRET,
+  access_token_key: env.TWITTER_ACCESS_TOKEN_KEY,
+  access_token_secret: env.TWITTER_ACCESS_TOKEN_SECRET
+});
 
 /* GET /everything */
 router.get('/everything', function(req, res, next)
@@ -28,6 +40,13 @@ router.get('/everything', function(req, res, next)
 // GET /local
 router.get('/local', function(req, res, next)
 {
+  // var params = {screen_name: 'thebattaps'};
+  // 
+  // twitterClient.get('statuses/user_timeline', params, function(error, tweets, response){
+  //   if (!error) {
+  //   }
+  // });
+  // 
   res.render('local', { env: env, user: req.user, guzzlrUser: req.guzzlrUser });
 });
 
