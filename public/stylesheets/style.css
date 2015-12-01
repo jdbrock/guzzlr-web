@@ -124,7 +124,16 @@ ul.nav li a:hover, ul.nav li a:active {
 
 .table tbody>tr>td.site-product-cell-seen
 {
-  padding-bottom: 4px;
+  margin: 0;
+  padding: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+  /*padding-bottom: 100px;*/
+  vertical-align: middle;
+}
+
+.table tbody>tr>td.site-product-cell-middle
+{
   vertical-align: middle;
 }
 
@@ -151,13 +160,23 @@ ul.nav li a:hover, ul.nav li a:active {
 
 .site-product-cell-shop .label
 {
-  font-size: 8pt;
+  font-size: 9pt;
   margin: 0;
+}
+
+.site-product-cell-rating
+{
+  text-align: center;
 }
 
 .site-product-cell-rating .label
 {
   font-size: 9pt;
+  width: 28px;
+  display: block;
+  text-align: center;
+  padding-left: 0;
+  padding-right: 0;
 }
 
 .site-product-cell-name

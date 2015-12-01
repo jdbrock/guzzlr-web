@@ -1,19 +1,36 @@
 table.table.table-striped
 	thead
 		tr
-			th Beer
-			th Shop
+			th.col-md-8 Beer
+			th.col-md-1 Shop
 			if !hideSeen
-				th Last Seen
+				th.col-md-2 Last Seen
 			else
-				th Seen
-			th RB
+				th.col-md-2 Seen
+			th.col-md-1 RB
 	tbody
 		each product, i in products
 			tr
 				td.site-product-cell-name
 					a(href="#{product.Uri}") #{product.Name}
-				td.site-product-cell-shop
+				td.site-product-cell-shop.hidden-md.hidden-lg
+					case product.ProviderKey
+						when "BIAB"
+							span.label(style="background-color: #27ae60") BIAB
+						when "BeerMerchants"
+							span.label(style="background-color: #d35400") BM
+						when "EtreGourmet"
+							span.label(style="background-color: #8e44ad") EG
+						when "Mikkeller"
+							span.label(style="background-color: #2e8ece") MK
+						when "Boxbeers"
+							span.label(style="background-color: #c0392b") BB
+						when "Brewdog"
+							span.label(style="background-color: #2c3e50") BD
+						default
+							span.label
+								|#{product.ProviderKey}
+				td.site-product-cell-shop.hidden-xs.hidden-sm
 					case product.ProviderKey
 						when "BIAB"
 							span.label(style="background-color: #27ae60") Belgium in a Box
@@ -35,4 +52,5 @@ table.table.table-striped
 				td.site-product-cell-rating
 					if product.RateBeerInfo
 						if product.RateBeerInfo.OverallPctl
-							span.label(style="background-color: rgba(255, 219, 55, 0.5); color: rgba(0, 0, 0, 0.75)") #{product.RateBeerInfo.OverallPctl.toFixed(0)}
+							span.label(style="background-color: rgba(255, 219, 55, 0.5); color: rgba(0, 0, 0, 0.75); ")
+								| #{product.RateBeerInfo.OverallPctl.toFixed(0)}

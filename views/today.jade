@@ -12,17 +12,15 @@ block content
 				|#{date.format('dddd Do MMMM')}
 			else
 				|Today
-	
-	if products.length == 0
-		.container
+
+	- var hideSeen = true
+	.container
+		if products.length == 0
 			.alert.alert-info
 				if past
 					|Uh oh. Looks like there weren't any new beers.
 				else
 					|Looks like there aren't any new beers yet. There's still time!
-
-	- var hideSeen = true
-	.container
 		if products.length > 0
 			include ./includes/product-table.jade
 

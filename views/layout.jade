@@ -42,6 +42,16 @@ body
             a(href='/local') Edinburgh
         ul.nav.navbar-nav.site-navbar-right
           if user
+            // TODO
+            if user.nickname === "Joe Brock"
+              li.dropdown
+                a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
+                  | Admin 
+                  span.caret
+                ul.dropdown-menu
+                  li
+                    a(href='/admin/review-ratebeer-matches') Review RateBeer Matches
+                  // li.divider(role='separator')
             li
               a(href='/profile') #{user.nickname}
             li

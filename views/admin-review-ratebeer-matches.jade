@@ -1,0 +1,31 @@
+extends layout
+
+block content
+	div.container.site-page-header
+		h2(style='margin-top: 0px') Admin
+		h4 Review RateBeer Matches
+	div.container
+		table.table.table-striped
+			thead
+				tr
+					th.col-md-4 Beer Name
+					th.col-md-4 RateBeer Name
+					th.col-md-4 Actions
+					// th.col-md-1 Shop
+					// if !hideSeen
+					// 	th.col-md-1 Last Seen
+					// else
+					// 	th.col-md-1 Seen
+					// th.col-md-1 RB
+			tbody
+				each product, i in products
+					tr
+						td.site-product-cell-middle
+							a(href="#{product.Uri}") #{product.Name}
+						td.site-product-cell-middle
+							if product.RateBeerInfo
+								a(href="http://www.ratebeer.com/beer/x/#{product.RateBeerInfo.BeerID}") #{product.RateBeerInfo.BeerName}
+						td.site-product-cell-middle
+							.btn-toolbar
+								a.btn.btn-sm.btn-warning(href='#') Manual Search
+								a.btn.btn-sm.btn-success(href='#') Confirm
