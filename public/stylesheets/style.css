@@ -138,6 +138,11 @@ ul.nav li a:hover, ul.nav li a:active {
   vertical-align: middle;
 }
 
+.table tbody>tr>td.site-product-cell-rating
+{
+  vertical-align: middle;
+}
+
 .site-product-cell-seen
 {
   white-space: nowrap;
@@ -148,6 +153,11 @@ ul.nav li a:hover, ul.nav li a:active {
 {
   font-size: 8pt;
   margin: 0;
+}
+
+.site-product-cell-rating .label
+{
+  font-size: 9pt;
 }
 
 .site-product-cell-name

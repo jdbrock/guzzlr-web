@@ -7,6 +7,7 @@ table.table.table-striped
 				th Last Seen
 			else
 				th Seen
+			th RB
 	tbody
 		each product, i in products
 			tr
@@ -31,3 +32,7 @@ table.table.table-striped
 								|#{product.ProviderKey}
 				td.site-product-cell-seen
 					|#{moment(product.LastSeen).fromNow()}
+				td.site-product-cell-rating
+					if product.RateBeerInfo
+						if product.RateBeerInfo.OverallPctl
+							span.label(style="background-color: rgba(255, 219, 55, 0.5); color: rgba(0, 0, 0, 0.75)") #{product.RateBeerInfo.OverallPctl.toFixed(0)}
