@@ -27,7 +27,7 @@ router.get('/everything', function(req, res, next)
   var db = req.db;
   var collection = db.get('products');
   
-  collection.find({}, {sort: {LastSeen: -1}}, function(e, docs)
+  collection.find({}, {sort: {Name: 1}}, function(e, docs)
   {
     docs = _.filter(docs, function(value) {
       return !value.OutOfStock;
