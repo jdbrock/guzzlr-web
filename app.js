@@ -28,7 +28,8 @@ var session = require('express-session');
 var mongo = require('mongodb');
 var monk = require('monk');
 var underscore = require('underscore');
-var db = monk('mongodb://d3vuser:caltinea@ds047504.mongolab.com:47504/guzzlr');
+// var db = monk('mongodb://d3vuser:caltinea@ds047504.mongolab.com:47504/guzzlr');
+var db = monk('mongodb://d3vuser:caltinea@lamppost.17.mongolayer.com:10272,lamppost.16.mongolayer.com:10283/guzzlrdev');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
