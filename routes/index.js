@@ -30,7 +30,13 @@ router.get('/everything', function(req, res, next)
   collection.find({}, {sort: {Name: 1}}, function(e, docs)
   {
     docs = _.filter(docs, function(value) {
-      return !value.OutOfStock;
+      
+      var now = moment();
+      var lastSeen = moment(value.LastSeen);
+      
+      var daysNotSeenBeforeHidden = 2;
+      
+      return !value.OutOfStock && now.diff(lastSeen, 'days') <= daysNotSeenBeforeHidden;
     });
     
     res.render('everything', { "products": docs, "env": env, user: req.user, guzzlrUser: req.guzzlrUser });
