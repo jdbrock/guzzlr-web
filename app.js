@@ -1,44 +1,40 @@
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var pbkdf2 = require('pbkdf2-sha256');
-var _ = require('underscore');
-var myHash = require('./crypto.js');
+/*****************************************************************
+ * IMPORTS
+ ****************************************************************/
 
-require('dotenv').load();
+var express         = require('express');
+var path            = require('path');
+var favicon         = require('serve-favicon');
+var logger          = require('morgan');
+var cookieParser    = require('cookie-parser');
+var bodyParser      = require('body-parser');
+var pbkdf2          = require('pbkdf2-sha256');
+var _               = require('underscore');
+var myHash          = require('./crypto.js');
+var dotenv          = require('dotenv').load();
+var passport        = require('passport');
+var strategy        = require('./setup-passport');
+var session         = require('express-session');
+var mongo           = require('mongodb');
+var monk            = require('monk');
 // require('dotenv-safe').load();
 
-//////////////// PASSPORT TEST
+/*****************************************************************
+ * DATABASE
+ ****************************************************************/
 
-var passport = require('passport');
-
-// This is the file we created in step 2.
-// This will configure Passport to use Auth0
-var strategy = require('./setup-passport');
-
-// Session and cookies middlewares to keep user logged in
-// var cookieParser = require('cookie-parser');
-var session = require('express-session');
-
-////////////////
-
-var mongo = require('mongodb');
-var monk = require('monk');
-var underscore = require('underscore');
-// var db = monk('mongodb://d3vuser:caltinea@ds047504.mongolab.com:47504/guzzlr');
 var db = monk('mongodb://d3vuser:caltinea@lamppost.17.mongolayer.com:10272,lamppost.16.mongolayer.com:10283/guzzlrdev');
 
-var routes = require('./routes/index');
-var users = require('./routes/users');
-var api = require('./routes/api');
-var admin = require('./routes/admin');
+/*****************************************************************
+ * EXPRESS
+ ****************************************************************/
 
 var app = express();
 
-// passport test
+/*****************************************************************
+ * PASSPORT
+ ****************************************************************/
+
 app.use(cookieParser());
 app.use(session({
   secret: 'shhhhhhhhh',
@@ -48,7 +44,10 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Auth0 callback handler
+/*****************************************************************
+ * AUTH0
+ ****************************************************************/
+
 app.get('/callback',
   passport.authenticate('auth0', { failureRedirect: '/login' }),
   function(req, res) {
@@ -78,17 +77,7 @@ app.get('/callback',
     });
   });
   
-
-  
 var requiresLogin = require('./requires-login');
-
-// app.get('/user',
-//   requiresLogin,
-//   function (req, res) {
-//     res.render('user', {
-//       user: req.user
-//     });
-//   });
 
 app.locals.moment = require('moment');
 
@@ -110,9 +99,6 @@ app.use(function(req, res, next) {
 });
 
 app.use(function(req, res, next) {
-  
-  var test = req.db;  
-  
   if (req.user)
   {
     var userIdHashed = myHash(req.user.id);
@@ -128,10 +114,15 @@ app.use(function(req, res, next) {
     next();
 });
 
+var routes  = require('./routes/index');
+var users   = require('./routes/users');
+var admin   = require('./routes/admin');
+var apiv1   = require('./routes/api-v1/api');
+
 app.use('/', routes);
-// app.use('/api', api);
 app.use('/users', users);
 app.use('/admin', admin);
+app.use('/api/v1', apiv1);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -163,6 +154,5 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
-
 
 module.exports = app;
