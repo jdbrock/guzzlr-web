@@ -23,7 +23,7 @@ var monk            = require('monk');
  * DATABASE
  ****************************************************************/
 
-var db = monk('mongodb://d3vuser:caltinea@lamppost.17.mongolayer.com:10272,lamppost.16.mongolayer.com:10283/guzzlrdev');
+var db = monk(process.env.MONGODB_CONNECTION_STRING);
 
 /*****************************************************************
  * EXPRESS
